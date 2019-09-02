@@ -10,7 +10,7 @@ const exec = require('child_process').exec
  */
 const execAsync = (command) => {
   return new Promise((resolve, reject) => {
-    exec(command, { cwd: process.cwd() }, (err, stdout) => {
+    exec(command, (err, stdout) => {
       if (err) {
         reject(stdout)
       } else {
