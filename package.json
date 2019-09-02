@@ -1,0 +1,34 @@
+{
+  "name": "alfred-bitwarden-workflow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "ryou",
+    "email": "sdmilieu@gmail.com",
+    "url": "https://www.sd-milieu.net/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@bitwarden/cli": "^1.7.4",
+    "alfy": "^0.9.1",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  }
+}
