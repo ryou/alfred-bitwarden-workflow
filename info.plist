@@ -8,11 +8,24 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>5C4CB406-A5D4-4FB7-ADAB-DE299AA3CCCB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>39935726-CF82-4CBC-AD67-47F5EB0061C7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>79700CBC-09B4-404D-B5CA-F7F3AE49E91C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>FA60B0F4-2C5D-4788-B03C-EA6476C30732</string>
+				<string>A6347DC0-C771-4D53-8667-683948070A36</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -22,11 +35,47 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>10BDD981-105B-42D0-A1A2-5CBB15748219</string>
+				<string>A037ECEA-B85D-48D2-BB68-587D279E639C</string>
 				<key>modifiers</key>
 				<integer>1048576</integer>
 				<key>modifiersubtext</key>
 				<string>Paste password to active window.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5C4CB406-A5D4-4FB7-ADAB-DE299AA3CCCB</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Paste username to active window.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A037ECEA-B85D-48D2-BB68-587D279E639C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>10BDD981-105B-42D0-A1A2-5CBB15748219</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A6347DC0-C771-4D53-8667-683948070A36</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FA60B0F4-2C5D-4788-B03C-EA6476C30732</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -94,6 +143,29 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./filter.js password "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A6347DC0-C771-4D53-8667-683948070A36</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
 				<false/>
 				<key>clipboardtext</key>
@@ -107,6 +179,29 @@
 			<string>FA60B0F4-2C5D-4788-B03C-EA6476C30732</string>
 			<key>version</key>
 			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./filter.js password "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A037ECEA-B85D-48D2-BB68-587D279E639C</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -125,6 +220,46 @@
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>39935726-CF82-4CBC-AD67-47F5EB0061C7</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./filter.js username "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>5C4CB406-A5D4-4FB7-ADAB-DE299AA3CCCB</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -133,21 +268,49 @@
 		<key>10BDD981-105B-42D0-A1A2-5CBB15748219</key>
 		<dict>
 			<key>xpos</key>
-			<integer>485</integer>
+			<integer>585</integer>
 			<key>ypos</key>
-			<integer>275</integer>
+			<integer>255</integer>
+		</dict>
+		<key>39935726-CF82-4CBC-AD67-47F5EB0061C7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>585</integer>
+			<key>ypos</key>
+			<integer>375</integer>
+		</dict>
+		<key>5C4CB406-A5D4-4FB7-ADAB-DE299AA3CCCB</key>
+		<dict>
+			<key>xpos</key>
+			<integer>380</integer>
+			<key>ypos</key>
+			<integer>375</integer>
 		</dict>
 		<key>79700CBC-09B4-404D-B5CA-F7F3AE49E91C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>230</integer>
+			<integer>135</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+		<key>A037ECEA-B85D-48D2-BB68-587D279E639C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>380</integer>
+			<key>ypos</key>
+			<integer>255</integer>
+		</dict>
+		<key>A6347DC0-C771-4D53-8667-683948070A36</key>
+		<dict>
+			<key>xpos</key>
+			<integer>380</integer>
 			<key>ypos</key>
 			<integer>140</integer>
 		</dict>
 		<key>FA60B0F4-2C5D-4788-B03C-EA6476C30732</key>
 		<dict>
 			<key>xpos</key>
-			<integer>480</integer>
+			<integer>585</integer>
 			<key>ypos</key>
 			<integer>140</integer>
 		</dict>

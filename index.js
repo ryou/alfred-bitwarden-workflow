@@ -41,7 +41,10 @@ const main = async () => {
     .filter(item => item.login)
     .map(item => ({
       title: item.name,
-      arg: item.login.password
+      arg: JSON.stringify({
+        username: item.login.username,
+        password: item.login.password
+      })
     }))
   alfy.output(items)
 }
