@@ -7,6 +7,10 @@
     "email": "sdmilieu@gmail.com",
     "url": "https://www.sd-milieu.net/"
   },
+  "scripts": {
+    "postinstall": "alfy-init",
+    "preuninstall": "alfy-cleanup"
+  },
   "license": "MIT",
   "dependencies": {
     "@bitwarden/cli": "^1.7.4",
