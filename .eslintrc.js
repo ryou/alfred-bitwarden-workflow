@@ -8,8 +8,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    sourceType: 'module',
-    project: './tsconfig.json'
+    sourceType: 'module'
   },
   rules: {
     'prettier/prettier': [
