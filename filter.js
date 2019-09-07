@@ -1,5 +1,3 @@
-#!/usr/local/bin/node
-// TODO: shebangで指定するnodeのパスがこれで本当にいいのかは再考が必要
 const program = require('commander')
 
 program

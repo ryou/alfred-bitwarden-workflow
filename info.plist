@@ -12,7 +12,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>39935726-CF82-4CBC-AD67-47F5EB0061C7</string>
+				<string>10BDD981-105B-42D0-A1A2-5CBB15748219</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -148,7 +148,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./filter.js password "$1"</string>
+				<string>./node_modules/.bin/run-node filter.js password "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -188,7 +188,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./filter.js password "$1"</string>
+				<string>./node_modules/.bin/run-node filter.js password "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -223,29 +223,12 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
-				<true/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>39935726-CF82-4CBC-AD67-47F5EB0061C7</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./filter.js username "$1"</string>
+				<string>./node_modules/.bin/run-node filter.js usename "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -272,19 +255,14 @@
 			<key>ypos</key>
 			<integer>255</integer>
 		</dict>
-		<key>39935726-CF82-4CBC-AD67-47F5EB0061C7</key>
-		<dict>
-			<key>xpos</key>
-			<integer>585</integer>
-			<key>ypos</key>
-			<integer>375</integer>
-		</dict>
 		<key>5C4CB406-A5D4-4FB7-ADAB-DE299AA3CCCB</key>
 		<dict>
+			<key>note</key>
+			<string>Paste username to active window.</string>
 			<key>xpos</key>
 			<integer>380</integer>
 			<key>ypos</key>
-			<integer>375</integer>
+			<integer>410</integer>
 		</dict>
 		<key>79700CBC-09B4-404D-B5CA-F7F3AE49E91C</key>
 		<dict>
@@ -295,6 +273,8 @@
 		</dict>
 		<key>A037ECEA-B85D-48D2-BB68-587D279E639C</key>
 		<dict>
+			<key>note</key>
+			<string>Paste password to active window.</string>
 			<key>xpos</key>
 			<integer>380</integer>
 			<key>ypos</key>
