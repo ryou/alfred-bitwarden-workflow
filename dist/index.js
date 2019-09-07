@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = require("./util");
+var bitwarden_1 = require("./libs/bitwarden");
 require('dotenv').config();
 var alfy = require('alfy');
 /**
@@ -44,13 +44,17 @@ var alfy = require('alfy');
  * 取得したデータはキャッシュに一時保存する
  */
 var fetchListItems = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var dataJsonString, data, maxAge;
+    var sessionKey, data, maxAge;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, util_1.execAsync("npx bw list items --session " + process.env.BW_SESSION)];
+            case 0:
+                sessionKey = process.env.BW_SESSION;
+                if (sessionKey === undefined) {
+                    throw new Error('environment variable BW_SESSION is required.');
+                }
+                return [4 /*yield*/, bitwarden_1.fetchItems(sessionKey)];
             case 1:
-                dataJsonString = _a.sent();
-                data = JSON.parse(dataJsonString);
+                data = _a.sent();
                 maxAge = 20 * 1000;
                 alfy.cache.set('list', data, { maxAge: maxAge });
                 return [2 /*return*/, data];

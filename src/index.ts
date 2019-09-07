@@ -1,4 +1,4 @@
-import { execAsync } from './util'
+import { fetchItems } from './libs/bitwarden'
 require('dotenv').config()
 const alfy = require('alfy')
 
@@ -7,10 +7,11 @@ const alfy = require('alfy')
  * 取得したデータはキャッシュに一時保存する
  */
 const fetchListItems = async (): Promise<string> => {
-    const dataJsonString = await execAsync(
-        `npx bw list items --session ${process.env.BW_SESSION}`
-    )
-    const data = JSON.parse(dataJsonString)
+    const sessionKey = process.env.BW_SESSION
+    if (sessionKey === undefined) {
+        throw new Error('environment variable BW_SESSION is required.')
+    }
+    const data = await fetchItems(sessionKey)
     const maxAge = 20 * 1000
     alfy.cache.set('list', data, { maxAge })
 

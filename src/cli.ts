@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 import { outputFile } from 'fs-extra'
-import { resolve } from 'path'
 import { Command } from 'commander'
-import { execAsync } from './util'
+import { login, logout } from './libs/bitwarden'
+import { PROJECT_ROOT_PATH } from './libs/config'
 
 const program = new Command()
-const projectRootPath = resolve(__dirname, '../')
-const bwPath = `${projectRootPath}/node_modules/.bin/bw`.replace(/ /g, '\\ ')
 
 /**
  * envファイルを生成する
@@ -15,35 +13,9 @@ const bwPath = `${projectRootPath}/node_modules/.bin/bw`.replace(/ /g, '\\ ')
  */
 const generateEnvFile = (sessionKey: string): Promise<void> => {
     const data = `BW_SESSION=${sessionKey}\n`
-    const outputPath = `${projectRootPath}/.env`
+    const outputPath = `${PROJECT_ROOT_PATH}/.env`
 
     return outputFile(outputPath, data)
-}
-
-/**
- * bitwardenからログアウトする
- */
-const logout = (): Promise<string> => {
-    const command = `${bwPath} logout`
-
-    return execAsync(command)
-}
-
-/**
- * bitwardenにログインし、成功時にはセッションキーを受け取る
- *
- * @param username
- * @param password
- * @param code
- */
-const login = (
-    username: string,
-    password: string,
-    code: string
-): Promise<string> => {
-    const command = `${bwPath} login ${username} ${password} --code ${code} --raw`
-
-    return execAsync(command)
 }
 
 program

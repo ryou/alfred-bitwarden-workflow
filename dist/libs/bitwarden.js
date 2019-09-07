@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -37,42 +36,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs_extra_1 = require("fs-extra");
-var commander_1 = require("commander");
-var bitwarden_1 = require("./libs/bitwarden");
-var config_1 = require("./libs/config");
-var program = new commander_1.Command();
+var util_1 = require("./util");
+var config_1 = require("./config");
+var bwPath = (config_1.PROJECT_ROOT_PATH + "/node_modules/.bin/bw").replace(/ /g, '\\ ');
+// TODO: 返り値のanyなんとかしたい
 /**
- * envファイルを生成する
+ * ログインID/パスワード情報を取得
  *
  * @param sessionKey
  */
-var generateEnvFile = function (sessionKey) {
-    var data = "BW_SESSION=" + sessionKey + "\n";
-    var outputPath = config_1.PROJECT_ROOT_PATH + "/.env";
-    return fs_extra_1.outputFile(outputPath, data);
-};
-program
-    .command('init <username> <password> <code>')
-    .description('login bitwarden and generate env file.')
-    .action(function (username, password, code) { return __awaiter(void 0, void 0, void 0, function () {
-    var sessionKey;
+exports.fetchItems = function (sessionKey) { return __awaiter(void 0, void 0, void 0, function () {
+    var command, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, bitwarden_1.logout().catch(function (error) { return console.log(error.message); })];
+            case 0:
+                command = bwPath + " list items --session " + sessionKey;
+                return [4 /*yield*/, util_1.execAsync(command)];
             case 1:
-                _a.sent();
-                console.log('progress login process.');
-                return [4 /*yield*/, bitwarden_1.login(username, password, code)];
-            case 2:
-                sessionKey = _a.sent();
-                console.log("login completed with session key " + sessionKey);
-                return [4 /*yield*/, generateEnvFile(sessionKey)];
-            case 3:
-                _a.sent();
-                console.log("generate env file with session key " + sessionKey);
-                return [2 /*return*/];
+                result = _a.sent();
+                return [2 /*return*/, JSON.parse(result)];
         }
     });
-}); });
-program.parse(process.argv);
+}); };
+/**
+ * bitwardenからログアウトする
+ */
+exports.logout = function () {
+    var command = bwPath + " logout";
+    return util_1.execAsync(command);
+};
+/**
+ * bitwardenにログインし、成功時にはセッションキーを受け取る
+ *
+ * @param username
+ * @param password
+ * @param code
+ */
+exports.login = function (username, password, code) {
+    var command = bwPath + " login " + username + " " + password + " --code " + code + " --raw";
+    return util_1.execAsync(command);
+};
