@@ -10,7 +10,7 @@ module.exports.execAsync = (command) => {
   return new Promise((resolve, reject) => {
     exec(command, (err, stdout) => {
       if (err) {
-        reject(stdout)
+        reject(new Error(stdout))
       } else {
         resolve(stdout)
       }

@@ -29,8 +29,10 @@ program
   .command('init <username> <password> <code>')
   .description('login bitwarden and generate env file.')
   .action(async (username, password, code) => {
-    await logout()
+    await logout().catch(error => console.log(error.message))
+    console.log('progress login process.')
     const sessionKey = await login(username, password, code)
+    console.log(`login completed with session key ${sessionKey}`)
     await generateEnvFile(sessionKey)
     console.log(`generate env file with session key ${sessionKey}`)
   })
