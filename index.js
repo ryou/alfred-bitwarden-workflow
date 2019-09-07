@@ -1,24 +1,6 @@
 require('dotenv').config()
 const alfy = require('alfy')
-const exec = require('child_process').exec
-
-/**
- * Promise版exec
- *
- * @param command
- * @returns {Promise<unknown>}
- */
-const execAsync = (command) => {
-  return new Promise((resolve, reject) => {
-    exec(command, (err, stdout) => {
-      if (err) {
-        reject(stdout)
-      } else {
-        resolve(stdout)
-      }
-    })
-  })
-}
+const { execAsync } = require('./util')
 
 /**
  * 認証情報データを取得し返却

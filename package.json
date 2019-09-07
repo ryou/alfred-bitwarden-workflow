@@ -1,11 +1,14 @@
 {
   "name": "alfred-bitwarden-workflow",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "author": {
     "name": "ryou",
     "email": "sdmilieu@gmail.com",
     "url": "https://www.sd-milieu.net/"
+  },
+  "bin": {
+    "alfred-bitwarden-workflow": "cli.js"
   },
   "scripts": {
     "postinstall": "alfy-init",
@@ -16,7 +19,8 @@
     "@bitwarden/cli": "^1.7.4",
     "alfy": "^0.9.1",
     "commander": "^3.0.1",
-    "dotenv": "^8.1.0"
+    "dotenv": "^8.1.0",
+    "fs-extra": "^8.1.0"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
