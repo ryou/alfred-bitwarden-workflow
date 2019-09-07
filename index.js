@@ -27,7 +27,7 @@ const execAsync = (command) => {
  * @returns {Promise<any>}
  */
 const fetchListItems = async () => {
-  const dataJsonString = await execAsync(`bw list items --session ${process.env.BW_SESSION}`)
+  const dataJsonString = await execAsync(`npx bw list items --session ${process.env.BW_SESSION}`)
   const data = JSON.parse(dataJsonString)
   const maxAge = 20 * 1000
   alfy.cache.set('list', data, { maxAge })
