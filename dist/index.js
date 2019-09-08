@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var BitwardenFactory_1 = require("./factory/BitwardenFactory");
+var config_1 = require("./libs/config");
 require('dotenv').config();
 var alfy = require('alfy');
 /**
@@ -44,47 +45,58 @@ var alfy = require('alfy');
  * 取得したデータはキャッシュに一時保存する
  */
 var fetchListItems = function (bitwarden, sessionKey) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, maxAge;
+    var cacheData, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, bitwarden.fetchItems(sessionKey)];
+            case 0:
+                cacheData = alfy.cache.get(config_1.CACHE_KEY);
+                if (cacheData !== undefined) {
+                    return [2 /*return*/, cacheData];
+                }
+                return [4 /*yield*/, bitwarden.fetchItems(sessionKey)];
             case 1:
                 data = _a.sent();
-                maxAge = 20 * 1000;
-                alfy.cache.set('list', data, { maxAge: maxAge });
+                alfy.cache.set(config_1.CACHE_KEY, data, { maxAge: config_1.CACHE_MAX_AGE });
                 return [2 /*return*/, data];
         }
     });
 }); };
+/**
+ * itemsのnameにinputを含むデータのみ抽出し、alfredに渡す形式に変換し返却
+ *
+ * @param items
+ * @param input
+ */
+var convertAndFilterItems = function (items, input) {
+    // TODO: ここらへんのanyどうにかしたい
+    return items
+        .filter(function (item) {
+        return (item.login &&
+            item.name.toLowerCase().includes(input.toLowerCase()));
+    })
+        .map(function (item) { return ({
+        title: item.name,
+        subtitle: item.login.username,
+        arg: JSON.stringify({
+            username: item.login.username,
+            password: item.login.password,
+        }),
+    }); });
+};
 var main = function (bitwarden) { return __awaiter(void 0, void 0, void 0, function () {
-    var sessionKey, data, _a, items;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var sessionKey, input, data, items;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
                 sessionKey = process.env.BW_SESSION;
                 if (sessionKey === undefined) {
                     throw new Error('environment variable BW_SESSION is required.');
                 }
-                _a = alfy.cache.get('list');
-                if (_a) return [3 /*break*/, 2];
+                input = alfy.input;
                 return [4 /*yield*/, fetchListItems(bitwarden, sessionKey)];
             case 1:
-                _a = (_b.sent());
-                _b.label = 2;
-            case 2:
-                data = _a;
-                items = alfy
-                    .inputMatches(data, 'name')
-                    // TODO: ここらへんのanyどうにかしたい
-                    .filter(function (item) { return item.login; })
-                    .map(function (item) { return ({
-                    title: item.name,
-                    subtitle: item.login.username,
-                    arg: JSON.stringify({
-                        username: item.login.username,
-                        password: item.login.password,
-                    }),
-                }); });
+                data = _a.sent();
+                items = convertAndFilterItems(data, input);
                 alfy.output(items);
                 return [2 /*return*/];
         }
