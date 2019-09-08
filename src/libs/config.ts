@@ -1,4 +1,3 @@
-// TODO: プロジェクトルートが直指定なのはどうにかならないか
-import { resolve } from 'path'
+import appRootPath from 'app-root-path'
 
-export const PROJECT_ROOT_PATH = resolve(__dirname, '../../')
+export const PROJECT_ROOT_PATH = appRootPath.path

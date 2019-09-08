@@ -22,11 +22,13 @@
   "dependencies": {
     "@bitwarden/cli": "^1.7.4",
     "alfy": "^0.9.1",
+    "app-root-path": "^2.2.1",
     "commander": "^3.0.1",
     "dotenv": "^8.1.0",
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
+    "@types/app-root-path": "^1.2.4",
     "@types/fs-extra": "^8.0.0",
     "@types/node": "^12.7.4",
     "@typescript-eslint/eslint-plugin": "^2.1.0",

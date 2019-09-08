@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,43 +49,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = require("./util");
-var config_1 = require("./config");
+var config_1 = require("../libs/config");
+var AbstractBitwarden_1 = require("./AbstractBitwarden");
 var bwPath = (config_1.PROJECT_ROOT_PATH + "/node_modules/.bin/bw").replace(/ /g, '\\ ');
-// TODO: 返り値のanyなんとかしたい
-/**
- * ログインID/パスワード情報を取得
- *
- * @param sessionKey
- */
-exports.fetchItems = function (sessionKey) { return __awaiter(void 0, void 0, void 0, function () {
-    var command, result;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                command = bwPath + " list items --session " + sessionKey;
-                return [4 /*yield*/, util_1.execAsync(command)];
-            case 1:
-                result = _a.sent();
-                return [2 /*return*/, JSON.parse(result)];
-        }
-    });
-}); };
-/**
- * bitwardenからログアウトする
- */
-exports.logout = function () {
-    var command = bwPath + " logout";
-    return util_1.execAsync(command);
-};
-/**
- * bitwardenにログインし、成功時にはセッションキーを受け取る
- *
- * @param username
- * @param password
- * @param code
- */
-exports.login = function (username, password, code) {
-    var command = bwPath + " login " + username + " " + password + " --code " + code + " --raw";
-    return util_1.execAsync(command);
-};
+var Bitwarden = /** @class */ (function (_super) {
+    __extends(Bitwarden, _super);
+    function Bitwarden() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    /**
+     * bitwardenにログインし、成功時にはセッションキーを受け取る
+     *
+     * @param username
+     * @param password
+     * @param code
+     */
+    Bitwarden.prototype.login = function (username, password, code) {
+        var command = bwPath + " login " + username + " " + password + " --code " + code + " --raw";
+        return this.execAsync(command);
+    };
+    /**
+     * bitwardenからログアウトする
+     */
+    Bitwarden.prototype.logout = function () {
+        var command = bwPath + " logout";
+        return this.execAsync(command);
+    };
+    // TODO: 返り値のanyなんとかしたい
+    /**
+     * ログインID/パスワード情報を取得
+     *
+     * @param sessionKey
+     */
+    Bitwarden.prototype.fetchItems = function (sessionKey) {
+        return __awaiter(this, void 0, void 0, function () {
+            var command, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        command = bwPath + " list items --session " + sessionKey;
+                        return [4 /*yield*/, this.execAsync(command)];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, JSON.parse(result)];
+                }
+            });
+        });
+    };
+    return Bitwarden;
+}(AbstractBitwarden_1.AbstractBitwarden));
+exports.Bitwarden = Bitwarden;

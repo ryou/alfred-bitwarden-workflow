@@ -36,23 +36,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var bitwarden_1 = require("./libs/bitwarden");
+var BitwardenFactory_1 = require("./factory/BitwardenFactory");
 require('dotenv').config();
 var alfy = require('alfy');
 /**
  * 認証情報データを取得し返却
  * 取得したデータはキャッシュに一時保存する
  */
-var fetchListItems = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var sessionKey, data, maxAge;
+var fetchListItems = function (bitwarden, sessionKey) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, maxAge;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                sessionKey = process.env.BW_SESSION;
-                if (sessionKey === undefined) {
-                    throw new Error('environment variable BW_SESSION is required.');
-                }
-                return [4 /*yield*/, bitwarden_1.fetchItems(sessionKey)];
+            case 0: return [4 /*yield*/, bitwarden.fetchItems(sessionKey)];
             case 1:
                 data = _a.sent();
                 maxAge = 20 * 1000;
@@ -61,14 +56,18 @@ var fetchListItems = function () { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var data, _a, items;
+var main = function (bitwarden) { return __awaiter(void 0, void 0, void 0, function () {
+    var sessionKey, data, _a, items;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
+                sessionKey = process.env.BW_SESSION;
+                if (sessionKey === undefined) {
+                    throw new Error('environment variable BW_SESSION is required.');
+                }
                 _a = alfy.cache.get('list');
                 if (_a) return [3 /*break*/, 2];
-                return [4 /*yield*/, fetchListItems()];
+                return [4 /*yield*/, fetchListItems(bitwarden, sessionKey)];
             case 1:
                 _a = (_b.sent());
                 _b.label = 2;
@@ -91,4 +90,4 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
         }
     });
 }); };
-main();
+main(BitwardenFactory_1.bitwarden);

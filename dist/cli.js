@@ -39,9 +39,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_extra_1 = require("fs-extra");
 var commander_1 = require("commander");
-var bitwarden_1 = require("./libs/bitwarden");
+var BitwardenFactory_1 = require("./factory/BitwardenFactory");
 var config_1 = require("./libs/config");
-var program = new commander_1.Command();
 /**
  * envファイルを生成する
  *
@@ -52,18 +51,15 @@ var generateEnvFile = function (sessionKey) {
     var outputPath = config_1.PROJECT_ROOT_PATH + "/.env";
     return fs_extra_1.outputFile(outputPath, data);
 };
-program
-    .command('init <username> <password> <code>')
-    .description('login bitwarden and generate env file.')
-    .action(function (username, password, code) { return __awaiter(void 0, void 0, void 0, function () {
+var mainAction = function (username, password, code, bitwarden) { return __awaiter(void 0, void 0, void 0, function () {
     var sessionKey;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, bitwarden_1.logout().catch(function (error) { return console.log(error.message); })];
+            case 0: return [4 /*yield*/, bitwarden.logout().catch(function (error) { return console.log(error.message); })];
             case 1:
                 _a.sent();
                 console.log('progress login process.');
-                return [4 /*yield*/, bitwarden_1.login(username, password, code)];
+                return [4 /*yield*/, bitwarden.login(username, password, code)];
             case 2:
                 sessionKey = _a.sent();
                 console.log("login completed with session key " + sessionKey);
@@ -74,5 +70,26 @@ program
                 return [2 /*return*/];
         }
     });
-}); });
-program.parse(process.argv);
+}); };
+var main = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var program;
+    return __generator(this, function (_a) {
+        program = new commander_1.Command();
+        program
+            .command('init <username> <password> <code>')
+            .description('login bitwarden and generate env file.')
+            .action(function (username, password, code) { return __awaiter(void 0, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, mainAction(username, password, code, BitwardenFactory_1.bitwarden)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        program.parse(process.argv);
+        return [2 /*return*/];
+    });
+}); };
+main();
