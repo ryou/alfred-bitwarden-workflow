@@ -55,7 +55,7 @@ var mainAction = function (username, password, code, bitwarden) { return __await
     var sessionKey;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, bitwarden.logout().catch(function (error) { return console.log(error.message); })];
+            case 0: return [4 /*yield*/, bitwarden.ensureLogout()];
             case 1:
                 _a.sent();
                 console.log('progress login process.');

@@ -4,34 +4,21 @@ import { AbstractBitwarden } from './AbstractBitwarden'
 const bwPath = `${PROJECT_ROOT_PATH}/node_modules/.bin/bw`.replace(/ /g, '\\ ')
 
 export class Bitwarden extends AbstractBitwarden {
-    /**
-     * bitwardenにログインし、成功時にはセッションキーを受け取る
-     *
-     * @param username
-     * @param password
-     * @param code
-     */
     login(username: string, password: string, code: string): Promise<string> {
         const command = `${bwPath} login ${username} ${password} --code ${code} --raw`
 
         return this.execAsync(command)
     }
 
-    /**
-     * bitwardenからログアウトする
-     */
-    logout(): Promise<string> {
+    async ensureLogout(): Promise<void> {
         const command = `${bwPath} logout`
-
-        return this.execAsync(command)
+        /* TODO: 単に例外握りつぶしているだけな点を改善
+         * ログインしていないエラーとそれ以外のエラーを区別する方法がわからんので現状握りつぶしているだけ…
+         * それ分かり次第改善
+         */
+        await this.execAsync(command).catch()
     }
 
-    // TODO: 返り値のanyなんとかしたい
-    /**
-     * ログインID/パスワード情報を取得
-     *
-     * @param sessionKey
-     */
     async fetchItems(sessionKey: string): Promise<any[]> {
         const command = `${bwPath} list items --session ${sessionKey}`
         const result = await this.execAsync(command)

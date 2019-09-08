@@ -23,7 +23,7 @@ const mainAction = async (
     code: string,
     bitwarden: AbstractBitwarden
 ): Promise<void> => {
-    await bitwarden.logout().catch(error => console.log(error.message))
+    await bitwarden.ensureLogout()
 
     console.log('progress login process.')
 

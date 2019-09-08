@@ -57,30 +57,33 @@ var Bitwarden = /** @class */ (function (_super) {
     function Bitwarden() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * bitwardenにログインし、成功時にはセッションキーを受け取る
-     *
-     * @param username
-     * @param password
-     * @param code
-     */
     Bitwarden.prototype.login = function (username, password, code) {
         var command = bwPath + " login " + username + " " + password + " --code " + code + " --raw";
         return this.execAsync(command);
     };
-    /**
-     * bitwardenからログアウトする
-     */
-    Bitwarden.prototype.logout = function () {
-        var command = bwPath + " logout";
-        return this.execAsync(command);
+    Bitwarden.prototype.ensureLogout = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var command;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        command = bwPath + " logout";
+                        /* TODO: 単に例外握りつぶしているだけな点を改善
+                         * ログインしていないエラーとそれ以外のエラーを区別する方法がわからんので現状握りつぶしているだけ…
+                         * それ分かり次第改善
+                         */
+                        return [4 /*yield*/, this.execAsync(command).catch()];
+                    case 1:
+                        /* TODO: 単に例外握りつぶしているだけな点を改善
+                         * ログインしていないエラーとそれ以外のエラーを区別する方法がわからんので現状握りつぶしているだけ…
+                         * それ分かり次第改善
+                         */
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
-    // TODO: 返り値のanyなんとかしたい
-    /**
-     * ログインID/パスワード情報を取得
-     *
-     * @param sessionKey
-     */
     Bitwarden.prototype.fetchItems = function (sessionKey) {
         return __awaiter(this, void 0, void 0, function () {
             var command, result;
