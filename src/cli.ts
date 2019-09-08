@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 import { outputFile } from 'fs-extra'
 import { Command } from 'commander'
-import { login, logout } from './libs/bitwarden'
+import { bitwarden } from './factory/BitwardenFactory'
 import { PROJECT_ROOT_PATH } from './libs/config'
-
-const program = new Command()
+import { AbstractBitwarden } from './bitwarden/AbstractBitwarden'
 
 /**
  * envファイルを生成する
@@ -18,21 +17,36 @@ const generateEnvFile = (sessionKey: string): Promise<void> => {
     return outputFile(outputPath, data)
 }
 
-program
-    .command('init <username> <password> <code>')
-    .description('login bitwarden and generate env file.')
-    .action(async (username, password, code) => {
-        await logout().catch(error => console.log(error.message))
+const mainAction = async (
+    username: string,
+    password: string,
+    code: string,
+    bitwarden: AbstractBitwarden
+): Promise<void> => {
+    await bitwarden.logout().catch(error => console.log(error.message))
 
-        console.log('progress login process.')
+    console.log('progress login process.')
 
-        const sessionKey = await login(username, password, code)
+    const sessionKey = await bitwarden.login(username, password, code)
 
-        console.log(`login completed with session key ${sessionKey}`)
+    console.log(`login completed with session key ${sessionKey}`)
 
-        await generateEnvFile(sessionKey)
+    await generateEnvFile(sessionKey)
 
-        console.log(`generate env file with session key ${sessionKey}`)
-    })
+    console.log(`generate env file with session key ${sessionKey}`)
+}
 
-program.parse(process.argv)
+const main = async () => {
+    const program = new Command()
+
+    program
+        .command('init <username> <password> <code>')
+        .description('login bitwarden and generate env file.')
+        .action(async (username, password, code) => {
+            await mainAction(username, password, code, bitwarden)
+        })
+
+    program.parse(process.argv)
+}
+
+main()
