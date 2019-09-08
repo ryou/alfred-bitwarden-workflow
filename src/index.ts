@@ -40,7 +40,10 @@ const fetchListItems = async (
  * @param items
  * @param input
  */
-const convertAndFilterItems = (items: any[], input: string): AlfredItem[] => {
+export const convertAndFilterItems = (
+    items: any[],
+    input: string
+): AlfredItem[] => {
     // TODO: ここらへんのanyどうにかしたい
     return items
         .filter((item: any): boolean => {
