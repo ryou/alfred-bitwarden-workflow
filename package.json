@@ -1,6 +1,6 @@
 {
   "name": "alfred-bitwarden-workflow",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "author": {
     "name": "ryou",
@@ -22,7 +22,6 @@
   "dependencies": {
     "@bitwarden/cli": "^1.7.4",
     "alfy": "^0.9.1",
-    "app-root-path": "^2.2.1",
     "commander": "^3.0.1",
     "dotenv": "^8.1.0",
     "fs-extra": "^8.1.0"
