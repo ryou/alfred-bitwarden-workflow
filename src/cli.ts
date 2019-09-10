@@ -46,6 +46,13 @@ const main = async () => {
             await mainAction(username, password, code, bitwarden)
         })
 
+    program
+        .command('project-root-path')
+        .description('output project root path (for debug)')
+        .action(() => {
+            console.log(PROJECT_ROOT_PATH)
+        })
+
     program.parse(process.argv)
 }
 

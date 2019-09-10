@@ -67,7 +67,7 @@ var fetchListItems = function (bitwarden, sessionKey) { return __awaiter(void 0,
  * @param items
  * @param input
  */
-var convertAndFilterItems = function (items, input) {
+exports.convertAndFilterItems = function (items, input) {
     // TODO: ここらへんのanyどうにかしたい
     return items
         .filter(function (item) {
@@ -96,7 +96,7 @@ var main = function (bitwarden) { return __awaiter(void 0, void 0, void 0, funct
                 return [4 /*yield*/, fetchListItems(bitwarden, sessionKey)];
             case 1:
                 data = _a.sent();
-                items = convertAndFilterItems(data, input);
+                items = exports.convertAndFilterItems(data, input);
                 alfy.output(items);
                 return [2 /*return*/];
         }
